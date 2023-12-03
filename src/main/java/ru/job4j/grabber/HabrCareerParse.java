@@ -26,6 +26,7 @@ public class HabrCareerParse {
 
     public static void main(String[] args) throws IOException {
         HabrCareerParse habrCareerParse = new HabrCareerParse();
+        HabrCareerDateTimeParser habrCareerDateTimeParser = new HabrCareerDateTimeParser();
         for (int pageNumber = 1; pageNumber <= PAGE_LIMIT; pageNumber++) {
             System.out.printf("Подключаюсь к %d странице%n", pageNumber);
             String fullLink = "%s%s%d%s".formatted(SOURCE_LINK, PREFIX, pageNumber, SUFFIX);
@@ -40,7 +41,7 @@ public class HabrCareerParse {
                 String vacancyName = titleElement.text();
                 String datetime = dateElement.attr("datetime");
                 String link = String.format("%s%s", SOURCE_LINK, linkElement.attr("href"));
-                LocalDateTime date = new HabrCareerDateTimeParser().parse(datetime);
+                LocalDateTime date = habrCareerDateTimeParser.parse(datetime);
                 System.out.printf("%s %s Вакансия выставлена: %3$tFT%3$tT%n",
                         vacancyName, link, date);
                 try {
